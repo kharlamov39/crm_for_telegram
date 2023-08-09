@@ -13,15 +13,30 @@ class User {
     }
 
     public function createTable() {
-        $query = "CREATE TABLE IF NOT EXISTS users (
+
+        $roleTableQuery = "CREATE TABLE IF NOT EXISTS roles(
             `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            `login` VARCHAR(255) NOT NULL,
+            `role_name` VARCHAR(255) NOT NULL,
+            `role_description` TEXT
+        )";
+
+        $userTableQuery = "CREATE TABLE IF NOT EXISTS users (
+            `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            `username` VARCHAR(255) NOT NULL,
+            `email` VARCHAR(255) NOT NULL,
+            `email_verification` TINYINT(1) NOT NULL DEFAULT 0,
             `password` VARCHAR(255) NOT NULL,
             `is_admin` TINYINT(1) NOT NULL DEFAULT 0,
-            `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
+            `role` INT(11) NOT NULL DEFAULT 0,
+            `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+            `last_login` TIMESTAMP NULL,
+            `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (`role`) REFERENCES `roles`(`id`)
+            )";
 
         try {
-            $this->db->exec($query);
+            $this->db->exec($roleTableQuery);
+            $this->db->exec($userTableQuery);
             return true;
         }catch(PDOException $err) {
             return false;
@@ -44,16 +59,17 @@ class User {
     }
 
     public function create($data) {
-        $login = $data['login'];
-        $password = password_hash($data['password'], PASSWORD_DEFAULT);
-        $is_admin = isset($data['is_admin']) ? 1 : 0;
+        $username = $data['username'];
+        $email = $data['email'];
+        $password = $data['password'];
+        $role = $data['role'];
         $created_at = date('Y-m-d H:i:s');
 
-        $query = "INSERT INTO `users` (login, password, is_admin, created_at) VALUES(?, ?, ?, ?)";
+        $query = "INSERT INTO `users` (username, email, password, role, created_at) VALUES(?, ?, ?, ?, ?)";
 
         try {
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$login, $password, $is_admin, $created_at]);
+            $stmt->execute([$username, $email, $password, $role, $created_at]);
             return true;
         } catch(PDOException $err) {
             return false;
@@ -87,13 +103,13 @@ class User {
     }
 
     public function update($id, $data) {
-        $login = $data['login'];
+        $username = $data['username'];
         $is_admin = !empty($data['is_admin']) && $data['is_admin'] !== 0 ? 1 : 0;
         
-        $query = "UPDATE `users` SET login = ?, is_admin = ? WHERE id = ?";
+        $query = "UPDATE `users` SET username = ?, is_admin = ? WHERE id = ?";
         try {
             $stmt = $this->db->prepare($query);
-            $stmt->execute([$login, $is_admin, $id]);
+            $stmt->execute([$username, $is_admin, $id]);
             return true;
         } catch(PDOException $err) {
             return false;    

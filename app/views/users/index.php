@@ -9,7 +9,8 @@ ob_start();
     <thead>
         <tr>
             <th scope="col">$</th>
-            <th scope="col">Login</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
             <th scope="col">Admin</th>
             <th scope="col">Created</th>
             <th scope="col">Actions</th>
@@ -19,8 +20,9 @@ ob_start();
         <?php foreach($users as $user): ?>
             <tr>
                 <td scope="row"><?=$user['id']?></td>
-                <td><?=$user['login']?></td>
-                <td><?=isset($user['is_admin']) ? 'Yes' : 'No'?></td>
+                <td><?=$user['username']?></td>
+                <td><?=$user['email']?></td>
+                <td><?=$user['is_admin'] ? 'Yes' : 'No'?></td>
                 <td><?=$user['created_at']?></td>
                 <td>
                     <a href="index.php?page=users&id=<?=$user['id']?>&action=edit" class="btn btn-primary" >Edit</a>

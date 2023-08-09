@@ -14,7 +14,7 @@ class UsersController {
     }
 
     public function store() {
-        if(isset($_POST['login']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
+        if(isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password'])) {
             $password = $_POST['password'];
             $confirm_password = $_POST['confirm_password'];
             if($password !== $confirm_password) {
@@ -23,7 +23,13 @@ class UsersController {
             } 
 
             $userModel = new User();
-            $userModel->create($_POST);
+            $data = [
+                'username' => $_POST['username'],
+                'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                'email' => $_POST['email'],
+                'role' => 1
+            ];
+            $userModel->create($data);
         }
         header('Location: index.php?page=users');
     }

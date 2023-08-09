@@ -6,8 +6,8 @@ ob_start();
 <h2>Edit User</h2>
 <form action="index.php?page=users&id=<?=$user['id']?>&action=update" method="post">
   <div class="mb-3">
-    <label for="login" class="form-label">Login</label>
-    <input type="text" class="form-control" id="login" name="login" value="<?=$user['login']?>">
+    <label for="username" class="form-label">Username</label>
+    <input type="text" class="form-control" id="username" name="username" value="<?=$user['username']?>">
   </div>
   <div class="mb-3 form-check">
       <label class="form-check-label" for="admin">Admin</label>

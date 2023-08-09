@@ -28,10 +28,39 @@ class Router{
                             break;   
                         case 'update':
                             $controller->update();
-                            break;       
+                            break;        
                     }   
                 } else {
                     $controller->index();
+                }
+                break;
+            case 'register':
+                $controller = new AuthController();
+                $controller->register();    
+                break;
+            case 'login':
+                $controller = new AuthController();
+                $controller->login();    
+                break;
+            case 'authentificate':
+                $controller = new AuthController();
+                $controller->authentificate();    
+                break;
+            case 'logout':
+                $controller = new AuthController();
+                $controller->logout();    
+                break;   
+            case 'auth': 
+                $controller = new AuthController();
+                if(isset($_GET['action'])) {
+                    switch($_GET['action']) {
+                        case 'store':
+                            $controller->store();
+                            break;
+                        case 'authentificate':
+                            $controller->authentificate();
+                            break;    
+                    }
                 }
                 break;
             default:
