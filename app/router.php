@@ -6,6 +6,10 @@ class Router{
         $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
         switch($page) {
+            case 'home': 
+                $controller = new HomeController();
+                $controller->index();
+                break;
             case 'users':
                 $controller = new UsersController();
                 if(isset($_GET['action'])) {
@@ -15,8 +19,17 @@ class Router{
                             break;
                         case 'store': 
                             $controller->store();
-                            break;    
-                    }
+                            break;   
+                        case 'delete':
+                            $controller->delete();
+                            break;  
+                        case 'edit':
+                            $controller->edit();
+                            break;   
+                        case 'update':
+                            $controller->update();
+                            break;       
+                    }   
                 } else {
                     $controller->index();
                 }

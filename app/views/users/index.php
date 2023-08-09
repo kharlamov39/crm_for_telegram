@@ -23,8 +23,8 @@ ob_start();
                 <td><?=isset($user['is_admin']) ? 'Yes' : 'No'?></td>
                 <td><?=$user['created_at']?></td>
                 <td>
-                    <a href="#">Edit</a>
-                    <a href="#">Delete</a>
+                    <a href="index.php?page=users&id=<?=$user['id']?>&action=edit" class="btn btn-primary" >Edit</a>
+                    <a href="index.php?page=users&id=<?=$user['id']?>&action=delete" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         <?php endforeach; ?>

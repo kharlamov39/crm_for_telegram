@@ -25,5 +25,27 @@ class UsersController {
             $userModel = new User();
             $userModel->create($_POST);
         }
+        header('Location: index.php?page=users');
+    }
+
+    public function delete() {
+        $usermodel = new User();
+        $usermodel->delete($_GET['id']);
+
+        header('Location: index.php?page=users');
+    }
+
+    public function edit() {
+        $usermodel = new User();
+        $user = $usermodel->read($_GET['id']);
+
+        include "app/views/users/edit.php";
+    }
+
+    public function update() {
+        $usermodel = new User();
+        $usermodel->update($_GET['id'], $_POST);
+        
+        header('Location: index.php?page=users');
     }
 }

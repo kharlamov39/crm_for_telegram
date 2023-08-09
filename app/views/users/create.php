@@ -4,8 +4,6 @@ ob_start();
 ?>
 
 <h2>Create User</h2>
-<a href="index.php?page=users">Users</a>
-
 <form action="index.php?page=users&action=store" method="post">
   <div class="mb-3">
     <label for="login" class="form-label">Login</label>
@@ -23,7 +21,7 @@ ob_start();
     <input type="checkbox" class="form-check-input" id="admin" value="1" name="is_admin">
     <label class="form-check-label" for="admin">Admin</label>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">Create</button>
 </form>
 
 <?php 
